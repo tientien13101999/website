@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,shrink-to-fit=no">
+    <title>Document</title>
+    <link rel="stylesheet" href="css.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+  <style type="text/css">
+        nav{
+            background-color:#47bdec;
+        }
+        nav a{
+            display:inline-block;
+            padding:15px;
+            font-size:15px;
+            color:white;
+            text-decoration:none;
+        }
+        nav a:hover{
+            background-color:#333;
+        }
+    </style>
+</head>
+<header>
+        <img src="img.png" alt="" width="100%" height="">
+</header>
+<body>
+
+    
+
+    <h1>
+        Thống Kê Thời Lượng Học Tập Của Sinh Viên
+    </h1>
+    <section class="sectione-span">
+    <nav>
+        <a href="#"id ="course1" onclick="changetext1();">Cấu trúc dữ liệu và giải thuật</a>
+        <a href="#" id ="course2"onclick="changetext2();">Lập trình Python</a>
+        <a href="#" id="course3"onclick="changetext3();">Thiết kế Web</a>
+        
+    </nav>
+    </section>
+
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center mb-5">
+                    <table align="center" cellspacing="5" cellpadding="5">
+                        <h3>Lựa chọn tuần</h3> 
+            <div class="dropdown">
+        <button class="dropbtn">Chọn Tuần Học</button>
+        <div class="dropdown-content">
+        <div class="scroll-div">
+          <a href="#" id="week1">Tuần 1</a>
+          <a href="#" id="week2">Tuần 2</a>
+          <a href="#" id="week3">Tuần 3</a>
+          <a href="#" id="week4">Tuần 4</a>
+          <a href="#" id="week5">Tuần 5</a>
+          <a href="#" id="week6">Tuần 6</a>
+          <a href="#" id="week7">Tuần 7</a> 
+        </div>
+        </div>
+      </div>
+        </table>
+                    <h2 class="heading-section">Tuần 1 - Cấu trúc dữ liệu và giải thuật</h2>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-wrap">
+                        <table id="myTable" class="table table-striped" style="width:100%">
+                          <thead>
+                            <tr>
+                              <th>STT</th>
+                              <th>Sinh viên</th>
+                              <th>Lớp học</th>
+                              <th>Email</th>
+                              <th>Giờ online</th>
+                              <th>Status</th>
+                            </tr>
+                          </thead>
+                          <tbody id="dataoutput">   
+                          </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        document.getElementById('course1').onclick = function (){
+            $(document).ready(function () {
+                var DATA
+	fetch("Reports.json")
+	.then(function(response){
+		return response.json();
+	})
+	.then(function(products){
+		DATA = products
+		render(0)
+	});
+
+	function render(week){
+		let placeholder = document.querySelector("#dataoutput");
+		$(".heading-section").html(`Tuần ${week+1} - Cấu trúc dữ liệu và giải thuật`)
+		let out = "";
+		if(DATA){
+			for(let product of DATA){
+				out += `
+					<tr>
+						<td>${product.STT}</td>
+						<td>${product.Name}</td>
+						<td>KHMT 16-01</td>
+						<td>${product.Emailaddress}</td>
+						<td>${product.Monhoc.MonCTDLGT.tuan.time[week]}</td>
+						<td><a href="#" class="btn btn-warning">InCompleted</a></td>
+					</tr>
+				`;
+			}
+
+			placeholder.innerHTML = out;
+		}
+		
+	}
+
+		$('#week1').on("click", (e) => {
+			e.preventDefault()
+			render(0)
+		})
+		$('#week2').on("click", (e) => {
+			e.preventDefault()
+			render(1)
+		})
+		$('#week3').on("click", (e) => {
+			e.preventDefault()
+			render(2)
+		})
+		$('#week4').on("click", (e) => {
+			e.preventDefault()
+			render(3)
+		})
+		$('#week5').on("click", (e) => {
+			e.preventDefault()
+			render(4)
+		})
+		$('#week6').on("click", (e) => {
+			e.preventDefault()
+			render(5)
+		})
+		$('#week7').on("click", (e) => {
+			e.preventDefault()
+			render(6)
+		})
+    $('#myTable').DataTable();
+});
+        }
+    $(document).ready(function () {
+    $('#myTable').DataTable();
+});
+
+    </script>
+     <script>
+        document.getElementById('course2').onclick = function (){
+            $(document).ready(function () {
+                var DATA
+	fetch("Reports.json")
+	.then(function(response){
+		return response.json();
+	})
+	.then(function(products){
+		DATA = products
+		render(0)
+	});
+
+	function render(week){
+		let placeholder = document.querySelector("#dataoutput");
+		$(".heading-section").html(`Tuần ${week+1} - Cấu trúc dữ liệu và giải thuật`)
+		let out = "";
+		if(DATA){
+			for(let product of DATA){
+				out += `
+					<tr>
+						<td>${product.STT}</td>
+						<td>${product.Name}</td>
+						<td>KHMT 16-01</td>
+						<td>${product.Emailaddress}</td>
+						<td>${product.Monhoc.LaptrinhPython.tuan.time[week]}</td>
+						<td><a href="#" class="btn btn-warning">InCompleted</a></td>
+					</tr>
+				`;
+			}
+
+			placeholder.innerHTML = out;
+		}
+		
+	}
+
+		$('#week1').on("click", (e) => {
+			e.preventDefault()
+			render(0)
+		})
+		$('#week2').on("click", (e) => {
+			e.preventDefault()
+			render(1)
+		})
+		$('#week3').on("click", (e) => {
+			e.preventDefault()
+			render(2)
+		})
+		$('#week4').on("click", (e) => {
+			e.preventDefault()
+			render(3)
+		})
+		$('#week5').on("click", (e) => {
+			e.preventDefault()
+			render(4)
+		})
+		$('#week6').on("click", (e) => {
+			e.preventDefault()
+			render(5)
+		})
+		$('#week7').on("click", (e) => {
+			e.preventDefault()
+			render(6)
+		})
+    $('#myTable').DataTable();
+});
+        }
+    $(document).ready(function () {
+    $('#myTable').DataTable();
+});
+
+    </script>
+    <script>
+        document.getElementById('course3').onclick = function (){
+            $(document).ready(function () {
+                var DATA
+	fetch("Reports.json")
+	.then(function(response){
+		return response.json();
+	})
+	.then(function(products){
+		DATA = products
+		render(0)
+	});
+
+	function render(week){
+		let placeholder = document.querySelector("#dataoutput");
+		$(".heading-section").html(`Tuần ${week+1} - Cấu trúc dữ liệu và giải thuật`)
+		let out = "";
+		if(DATA){
+			for(let product of DATA){
+				out += `
+					<tr>
+						<td>${product.STT}</td>
+						<td>${product.Name}</td>
+						<td>KHMT 16-01</td>
+						<td>${product.Emailaddress}</td>
+						<td>${product.Monhoc.ThietkeWeb.tuan.time[week]}</td>
+						<td><a href="#" class="btn btn-warning">InCompleted</a></td>
+					</tr>
+				`;
+			}
+
+			placeholder.innerHTML = out;
+		}
+		
+	}
+
+		$('#week1').on("click", (e) => {
+			e.preventDefault()
+			render(0)
+		})
+		$('#week2').on("click", (e) => {
+			e.preventDefault()
+			render(1)
+		})
+		$('#week3').on("click", (e) => {
+			e.preventDefault()
+			render(2)
+		})
+		$('#week4').on("click", (e) => {
+			e.preventDefault()
+			render(3)
+		})
+		$('#week5').on("click", (e) => {
+			e.preventDefault()
+			render(4)
+		})
+		$('#week6').on("click", (e) => {
+			e.preventDefault()
+			render(5)
+		})
+		$('#week7').on("click", (e) => {
+			e.preventDefault()
+			render(6)
+		})
+    $('#myTable').DataTable();
+});
+        }
+    $(document).ready(function () {
+    $('#myTable').DataTable();
+});
+
+    </script>
+    <script src="script.js"></script>
+
+</body>
+
+</html>
