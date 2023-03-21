@@ -1,0 +1,65 @@
+
+$(document).ready(() => {
+	var DATA
+	fetch("Reports.json")
+	.then(function(response){
+		return response.json();
+	})
+	.then(function(products){
+		DATA = products
+		render(0)
+	});
+	
+
+	function render(week){
+		let placeholder = document.querySelector("#dataoutput");
+		$(".heading-section").html(`Tuần ${week+1} -Cấu trúc dữ liệu và giải thuật`)
+		let out = "";
+		if(DATA){
+			for(let product of DATA){
+				out += `
+					<tr>
+						<td>${product.STT}</td>
+						<td>${product.Name}</td>
+						<td>${product.Class}</td>
+						<td>${product.Emailaddress}</td>
+						<td>${product.Monhoc.MonCTDLGT.tuan.time[week]}</td>
+						<td><a href="#" class="btn btn-warning">InCompleted</a></td>
+					</tr>
+				`;
+			}
+
+			placeholder.innerHTML = out;
+		}
+		
+	}
+		$('#week1').on("click", (e) => {
+			e.preventDefault()
+			render(0)
+		})
+		$('#week2').on("click", (e) => {
+			e.preventDefault()
+			render(1)
+		})
+		$('#week3').on("click", (e) => {
+			e.preventDefault()
+			render(2)
+		})
+		$('#week4').on("click", (e) => {
+			e.preventDefault()
+			render(3)
+		})
+		$('#week5').on("click", (e) => {
+			e.preventDefault()
+			render(4)
+		})
+		$('#week6').on("click", (e) => {
+			e.preventDefault()
+			render(5)
+		})
+		$('#week7').on("click", (e) => {
+			e.preventDefault()
+			render(6)
+		})
+		
+})
